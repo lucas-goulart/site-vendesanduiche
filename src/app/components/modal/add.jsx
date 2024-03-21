@@ -86,7 +86,7 @@ export default function ModalAdd({ handleCloseAdd, database, setDatabase }) {
                 bottom: "100%", // Isso faz o componente começar exatamente acima do TextField
                 maxHeight: "200px", // Você pode ajustar isso conforme necessário
                 overflowY: "auto", // Isso permite que a lista seja rolável se exceder a altura máxima
-                zIndex: 2,
+                zIndex: 1000,
                 width: "100%", // Isso faz o Paper ter a mesma largura do TextField
               }}
             >

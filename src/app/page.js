@@ -9,7 +9,21 @@ import ModalCheckout from "./components/modal/checkout";
 
 // Estilos para o modal
 // Estilos para o modal
-const style = {
+const styleAdd = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80%", // Largura do modal baseada na largura da tela
+  maxWidth: "70vw", // Largura máxima do modal
+  maxHeight: "75vh", // Altura máxima do modal, baseada na altura da tela
+  overflow: "visible", // Mantém o conteúdo horizontal dentro do modal, sem scroll
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+const styleCheckout = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -72,7 +86,7 @@ export default function Home() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={styleAdd}>
           <ModalAdd
             handleCloseAdd={handleCloseAdd}
             database={database}
@@ -87,7 +101,7 @@ export default function Home() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={styleCheckout}>
           <ModalCheckout
             handleCloseCheckout={handleCloseCheckout}
             database={database}
