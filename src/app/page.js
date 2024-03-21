@@ -1,95 +1,114 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { Box, Button, Modal, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import ModalAdd from "./components/modal/add";
+import CardLinhaProducao from "./components/card/linhaProd";
+import ModalCheckout from "./components/modal/checkout";
+
+// Estilos para o modal
+// Estilos para o modal
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80%", // Largura do modal baseada na largura da tela
+  maxWidth: "70vw", // Largura máxima do modal
+  maxHeight: "75vh", // Altura máxima do modal, baseada na altura da tela
+  overflowY: "auto", // Adiciona scroll vertical se o conteúdo exceder a altura máxima
+  overflowX: "hidden", // Mantém o conteúdo horizontal dentro do modal, sem scroll
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function Home() {
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [openModalCheckout, setOpenModalCheckout] = useState(false);
+  const handleOpenAdd = () => setOpenModalAdd(true);
+  const handleCloseAdd = () => setOpenModalAdd(false);
+  const handleOpenCheckout = () => setOpenModalCheckout(true);
+  const handleCloseCheckout = () => setOpenModalCheckout(false);
+
+  const [database, setDatabaseReal] = useState([]);
+
+  useEffect(() => {
+    const databaseString = localStorage.getItem("db_sanduiches");
+    const parsedDatabase = JSON.parse(databaseString) || [];
+    setDatabase(parsedDatabase);
+  }, []);
+
+  function setDatabase(database) {
+    localStorage.setItem("db_sanduiches", JSON.stringify(database));
+    setDatabaseReal(database);
+  }
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <>
+      <Box
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
+        <AddCircleIcon
+          fontSize="large"
+          sx={{ m: "1em" }}
+          onClick={handleOpenAdd}
         />
-      </div>
+        <PointOfSaleIcon
+          fontSize="large"
+          sx={{ m: "1em" }}
+          onClick={handleOpenCheckout}
+        />
+      </Box>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+      <Modal
+        open={openModalAdd}
+        onClose={handleCloseAdd}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <ModalAdd
+            handleCloseAdd={handleCloseAdd}
+            database={database}
+            setDatabase={setDatabase}
+          />
+        </Box>
+      </Modal>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <Modal
+        open={openModalCheckout}
+        onClose={handleCloseCheckout}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <ModalCheckout
+            handleCloseCheckout={handleCloseCheckout}
+            database={database}
+            setDatabase={setDatabase}
+          />
+        </Box>
+      </Modal>
+      {database.map((value, index) => {
+        return (
+          <CardLinhaProducao
+            key={index}
+            value={value}
+            database={database}
+            setDatabase={setDatabase}
+            onDelete={(id) => {
+              const newDatabase = database.filter((item) => item.id !== id);
+              setDatabase(newDatabase);
+            }}
+          />
+        );
+      })}
+    </>
   );
 }
