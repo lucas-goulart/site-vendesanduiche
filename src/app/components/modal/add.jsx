@@ -37,8 +37,12 @@ export default function ModalAdd({ handleCloseAdd, database, setDatabase }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const newID = database.reduce((acc, obj) => {
+      return obj.id > acc ? obj.id : acc;
+    }, 0);
+    console.log(newID);
     const newEntry = {
-      id: database.length + 1,
+      id: newID + 1,
       nome,
       tipo: escolha,
       pgClube: false,

@@ -94,16 +94,19 @@ export default function ModalCheckout({
           );
         })}
       </Box>
-      <button
-        onClick={() => {
-          if (window.confirm("Tem certeza que deseja resetar?")) {
-            setDatabase([]);
-            handleCloseCheckout();
-          }
-        }}
-      >
-        RESET
-      </button>
+      <div>
+        <button
+          onClick={() => {
+            if (window.confirm("Tem certeza que deseja resetar?")) {
+              setDatabase([]);
+              handleCloseCheckout();
+            }
+          }}
+        >
+          RESET
+        </button>
+        <button onClick={() => console.log(database)}>CONSOLE.LOG</button>
+      </div>
     </>
   );
 }

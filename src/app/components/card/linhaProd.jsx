@@ -44,7 +44,7 @@ export default function CardLinhaProducao({
     // Defina um temporizador para executar o console.log após 500 ms (meio segundo)
     const timer = setTimeout(() => {
       handleDelete();
-    }, 800); // Ajuste o tempo conforme necessário
+    }, 2000); // Ajuste o tempo conforme necessário
 
     setPressTimer(timer);
   };
@@ -56,7 +56,15 @@ export default function CardLinhaProducao({
   };
 
   function handleDelete() {
-    onDelete(value.id);
+    // Exibe a caixa de diálogo de confirmação
+    const isConfirmed = confirm(
+      `Tem certeza que deseja deletar ${value.nome} - ${value.tipo}?`
+    );
+
+    // Se o usuário confirmar, executa a função de deletar
+    if (isConfirmed) {
+      onDelete(value.id);
+    }
   }
 
   return (

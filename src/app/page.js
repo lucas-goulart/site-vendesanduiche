@@ -47,13 +47,95 @@ export default function Home() {
   const handleOpenCheckout = () => setOpenModalCheckout(true);
   const handleCloseCheckout = () => setOpenModalCheckout(false);
 
-  const [database, setDatabaseReal] = useState([]);
+  /* const [database, setDatabaseReal] = useState([]); */
+  const [database, setDatabaseReal] = useState([
+    {
+      id: 1,
+      nome: "1",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+    {
+      id: 2,
+      nome: "2",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+    {
+      id: 3,
+      nome: "3",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+    {
+      id: 4,
+      nome: "4",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+    {
+      id: 5,
+      nome: "5",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+    {
+      id: 6,
+      nome: "6",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+    {
+      id: 7,
+      nome: "7",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+    {
+      id: 8,
+      nome: "8",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+    {
+      id: 9,
+      nome: "9",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+    {
+      id: 10,
+      nome: "10",
+      tipo: "Misto Quente",
+      pgClube: false,
+      pg: false,
+      produzido: false,
+    },
+  ]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const databaseString = localStorage.getItem("db_sanduiches");
     const parsedDatabase = JSON.parse(databaseString) || [];
     setDatabase(parsedDatabase);
-  }, []);
+  }, []); */
 
   function setDatabase(database) {
     localStorage.setItem("db_sanduiches", JSON.stringify(database));
@@ -66,6 +148,7 @@ export default function Home() {
           justifyContent: "center",
           alignItems: "center",
           display: "flex",
+          background: "purple",
         }}
       >
         <AddCircleIcon
@@ -109,20 +192,22 @@ export default function Home() {
           />
         </Box>
       </Modal>
-      {database.map((value, index) => {
-        return (
-          <CardLinhaProducao
-            key={index}
-            value={value}
-            database={database}
-            setDatabase={setDatabase}
-            onDelete={(id) => {
-              const newDatabase = database.filter((item) => item.id !== id);
-              setDatabase(newDatabase);
-            }}
-          />
-        );
-      })}
+      <Box overflow={"scroll"} maxHeight={"80vh"}>
+        {database.map((value, index) => {
+          return (
+            <CardLinhaProducao
+              key={index}
+              value={value}
+              database={database}
+              setDatabase={setDatabase}
+              onDelete={(id) => {
+                const newDatabase = database.filter((item) => item.id !== id);
+                setDatabase(newDatabase);
+              }}
+            />
+          );
+        })}
+      </Box>
     </>
   );
 }
