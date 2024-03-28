@@ -66,7 +66,6 @@ export default function Home() {
           justifyContent: "center",
           alignItems: "center",
           display: "flex",
-          background: "purple",
         }}
       >
         <AddCircleIcon
